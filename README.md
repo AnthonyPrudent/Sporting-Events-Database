@@ -1,5 +1,5 @@
 # Sporting Events Management System
-A datbase driven website to manage sporting events with venues, teams, sports, streaming services, leagues, and players.
+A database driven website to manage sporting events with venues, teams, sports, streaming services, leagues, and players.
 Note: Not all tables on the web application have all CRUD operations implemented. Only the Events and Leagues table are implemented completely.
 
 ### Technologies:
