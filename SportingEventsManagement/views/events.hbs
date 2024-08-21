@@ -1,0 +1,303 @@
+<!--
+Citation for the following Handlebars code:
+Date: 8/9/2024
+Adapted from
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main 
+The tables and forms were refitted to accomodate the sporting events database.
+-->
+
+<!-- leagues.hbs -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<section>
+
+    <article>
+
+        <h3>Events</h3>
+        <p>Add, edit, and delete information about sporting events, including name, venue, date, sport, score, league and ticket price.</p>
+
+        {{!-- Create a table --}}
+        <table id="events-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+
+                {{!-- For each row, print the attribute columns in order --}}
+                {{#each data}}
+                <tr data-value={{this.EventID}}>
+                    <td>{{this.EventID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.Date}}</td>
+                    <td>{{this.Venue}}</td>
+                    <td>{{this.Sport}}</td>
+                    <td>{{this.Score}}</td>
+                    <td>{{this.League}}</td>
+                    <td>{{this.TicketPrice}}</td>
+                    <td><button onclick="deleteEvent({{this.EventID}})">Delete</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+
+        <h3>Competing Teams</h3>
+        <p>Represents teams competing against each other in a sporting event.</p>
+
+        {{!-- Create a table --}}
+        <table id="competingteams-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    <th>CompetingTeamID</th>
+                    <th>Event</th>
+                    <th>Team</th>
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+
+                {{!-- For each row, print the attribute columns in order --}}
+                {{#each competingTeams}}
+                <tr data-value={{this.EventID}}>
+                    <td>{{this.CompetingTeamID}}</td>
+                    <td>{{this.Event}}</td>
+                    <td>{{this.Team}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+
+        <h3>Event Streamings</h3>
+        <p>Represents streaming services available to watch a sporting event.</p>
+
+        {{!-- Create a table --}}
+        <table id="eventstreams-table">
+
+            {{!-- Header section --}}
+            <thead>
+                <tr>
+                    <th>EventStreamID</th>
+                    <th>Event</th>
+                    <th>StreamingService</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+
+                {{!-- For each row, print the attribute columns in order --}}
+                {{#each eventStreams}}
+                <tr id={{this.EventStreamID}} data-value={{this.EventID}}>
+                    <td>{{this.EventStreamID}}</td>
+                    <td>{{this.Event}}</td>
+                    <td>{{this.StreamingService}}</td>
+                    <td><button onclick="deleteEventStream({{this.EventStreamID}})">Delete</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+        {{!-- Form to add a record to the table  --}}
+        <h3 id="add-event-form-header">Add Event</h3>
+        <p id="add-event-form-description">Fill out the information below and click submit when finished.</p>
+        <form id="add-event-form-ajax">
+            <label for="input-name">Name: </label>
+            <input type="text" name="input-name" id="input-name" required>
+            
+            <label for="input-date">Date: </label>
+            <input type="datetime-local" name="input-date" id="input-date" required>
+
+            <select name="input-venue" id="input-venue" required>
+                <option value="">Select a Venue</option>
+                {{#each venues}}
+                <option value="{{this.VenueID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-sport" id="input-sport" required>
+                <option value="">Select a Sport</option>
+                {{#each sports}}
+                <option value="{{this.SportID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="input-score">Score: </label>
+            <input type="text" name="input-score" id="input-score" required>
+
+            <select name="input-league" id="input-league" required>
+                <option value="">Select a League</option>
+                {{#each leagues}}
+                <option value="{{this.LeagueID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="input-ticketprice">Ticket Price: </label>
+            <input type="number" min="0" name="input-ticketprice" id="input-ticketprice" required>
+
+            <input type="submit">
+        </form>
+
+        <h3>Edit Event</h3>
+        <p>Fill out the information below and click submit when finished.</p>
+        <form id="update-event-form-ajax">
+
+            <label for="input-event-update">Event to Edit: </label>
+            <select name="input-event-update" id="input-event-update" required>
+                <option value="test">Select an Event</option>
+                {{#each data}}
+                <option value="{{this.EventID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="input-name-update">Name: </label>
+            <input type="text" name="input-name-update" id="input-name-update" required>
+            
+            <label for="input-date-update">Date: </label>
+            <input type="datetime-local" name="input-date-update" id="input-date-update" required>
+
+            <select name="input-venue-update" id="input-venue-update" required>
+                <option value="">Select a Venue</option>
+                {{#each venues}}
+                <option value="{{this.VenueID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-sport-update" id="input-sport-update" required>
+                <option value="">Select a Sport</option>
+                {{#each sports}}
+                <option value="{{this.SportID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="input-score-update">Score: </label>
+            <input type="text" name="input-score-update" id="input-score-update" required>
+
+            <select name="input-league-update" id="input-league-update" required>
+                <option value="">Select a League</option>
+                {{#each leagues}}
+                <option value="{{this.LeagueID}}">{{this.Name}}</option>
+                {{/each}}
+                <option value="None">Disassociate from a League</option>
+            </select>
+
+            <label for="input-ticketprice-update">Ticket Price: </label>
+            <input type="number" min="0" name="input-ticketprice-update" id="input-ticketprice-update" required>
+
+            <input type="submit">
+        </form>
+    </article>
+
+    <article>
+        {{!-- Form to add a record to the table  --}}
+        <h3 id="add-competingteam-form-header">Add a Competing Team</h3>
+        <p id="add-competingteam-form-description">Fill out the information below and click submit when finished.</p>
+        <form id="add-competingteam-form-ajax">
+            <select name="input-event" id="input-event" required>
+                <option value="">Select an Event</option>
+                {{#each data}}
+                <option value="{{this.EventID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-team" id="input-team" required>
+                <option value="">Select a Team</option>
+                {{#each teams}}
+                <option value="{{this.TeamID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit">
+        </form>
+    </article>
+
+    <article>
+        {{!-- Form to add a record to the table  --}}
+        <h3 id="add-eventstream-form-header">Add a Streamed Event</h3>
+        <p id="add-eventstream-form-description">Fill out the information below and click submit when finished.</p>
+        <form id="add-eventstream-form-ajax">
+            <select name="input-streamedevent" id="input-streamedevent" required>
+                <option value="">Select an Event</option>
+                {{#each data}}
+                <option value="{{this.EventID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-service" id="input-service" required>
+                <option value="">Select a Streaming Service</option>
+                {{#each streamingServices}}
+                <option value="{{this.ServiceID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit">
+        </form>
+
+        <h3>Edit a Streamed Event</h3>
+        <p>Fill out the information below and click submit when finished.</p>
+        <form id="update-streamedevent-form-ajax">
+
+            <label for="input-streamedeventid-update">Streamed Event to Edit: </label>
+            <select name="input-streamedeventid-update" id="input-streamedeventid-update" required>
+                <option value="test">Select a Streamed Event</option>
+                {{#each eventStreams}}
+                <option value="{{this.EventStreamID}}">{{this.Event}} - {{this.StreamingService}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-streamedevent-update" id="input-streamedevent-update" required>
+                <option value="">Select an Event</option>
+                {{#each data}}
+                <option value="{{this.EventID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <select name="input-service-update" id="input-service-update" required>
+                <option value="">Select a Streaming Service</option>
+                {{#each streamingServices}}
+                <option value="{{this.ServiceID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit">
+        </form>
+
+    </article>
+
+</section>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_event.js"></script>
+<script src="./js/delete_event.js"></script>
+<script src="./js/update_event.js"></script>
+<script src="./js/add_competingteam.js"></script>
+<script src="./js/add_streamingevent.js"></script>
+<script src="./js/delete_streamingevent.js"></script>
+<script src="./js/update_streamingevent.js"></script>

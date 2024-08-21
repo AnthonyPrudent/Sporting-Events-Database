@@ -1,0 +1,134 @@
+:root {
+    --bg: #F9FAFB;
+    --txt: #1F2937;
+    --acc: #F59E0B;
+    --sec: #E5E7EB;
+    --prim: #3B3B3B;
+}
+
+body {
+    background-color: var(--bg);
+    margin: 1%;
+    color: var(--txt);
+    padding: 2%;
+    font-size: 25px;
+}
+
+header {
+    background-color: var(--sec);
+    margin: 2%;
+    padding: 2%; 
+    text-align: center;
+    border: 2px solid;
+}
+
+nav {
+    background-color: var(--sec);
+    margin: 2%;
+    padding: 2%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    border: 2px solid;
+}
+
+nav a {
+    text-decoration: none;
+    background-color: var(--prim);
+    color: var(--sec);
+    margin: 20px 10px;
+    padding: 2%;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: var(--acc);
+}
+
+main {
+    background-color: var(--sec);
+    margin: 2%;
+    padding: 2%;
+    border: 2px solid;
+    text-align: center;
+}
+
+section {
+    background-color: var(--sec);
+}
+
+article {
+    background-color: var(--bg);
+    text-align: center;
+    margin: 3% 4%;
+    padding: 10px 5% 50px;
+    border-radius: 52px;
+}
+
+footer {
+    background-color: var(--sec);
+    margin: 2%;
+    padding: 2%;
+    border: 2px solid;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    border-bottom: solid 2px;
+    margin: 1%;
+    padding: 25px;
+    text-align: center;
+  }
+
+th {
+    padding: 10px 30px 15px 30px;
+    text-align: center;
+    background-color: var(--prim);
+    color: var(--sec);
+}
+
+input {
+    width: 300px;
+    max-width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+button {
+    width: 100px;
+    max-width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: var(--acc);
+}
+
+select {
+    width: 200px;
+    max-width: 100%;
+    padding: 8px;
+    font-size: 18px;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}

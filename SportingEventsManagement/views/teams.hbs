@@ -1,0 +1,76 @@
+<!--
+Citation for the following Handlebars code:
+Date: 8/9/2024
+Adapted from
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main 
+The tables and forms were refitted to accomodate the sporting leagues database.
+-->
+
+<!-- leagues.hbs -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<section>
+
+    <article>
+
+        <h3>Teams</h3>
+        <p>Displays team information from different sports such as name, coach, and sport.</p>
+        
+        {{!-- Create a table --}}
+        <table id="teams-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+
+                {{!-- For each row, print the attribute columns in order --}}
+                {{#each data}}
+                <tr data-value={{this.TeamID}}>
+                    <td>{{this.TeamID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.Coach}}</td>
+                    <td>{{this.Sport}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+        {{!-- Form to add a record to the table  --}}
+        <h3 id="add-team-form-header">Add Team</h3>
+        <p id="add-team-form-description">Fill out the information below and click submit when finished.</p>
+        <form id="add-team-form-ajax">
+            <label for="input-name">Name: </label>
+            <input type="text" name="input-name" id="input-name" required>
+            
+            <label for="input-coach">Coach: </label>
+            <input type="text" name="input-coach" id="input-coach" required>
+
+            <select name="input-sport" id="input-sport" required>
+                <option value="">Select a Sport</option>
+                {{#each sports}}
+                <option value="{{this.SportID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit">
+        </form>
+    </article>
+</section>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_team.js"></script>

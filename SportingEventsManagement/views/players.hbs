@@ -1,0 +1,76 @@
+<!--
+Citation for the following Handlebars code:
+Date: 8/9/2024
+Adapted from
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main 
+The tables and forms were refitted to accomodate the sporting leagues database.
+-->
+
+<!-- leagues.hbs -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<section>
+
+    <article>
+
+        <h3>Players</h3>
+        <p>Displays player data such as name, position, and team.</p>
+        
+        {{!-- Create a table --}}
+        <table id="players-table">
+
+            {{!-- Header section --}}
+            <thead>
+
+                {{!-- For just the first row, we print each key of the row object as a header cell so we
+                know what each column means when the page renders --}}
+                <tr>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+
+            {{!-- Body section --}}
+            <tbody>
+
+                {{!-- For each row, print the attribute columns in order --}}
+                {{#each data}}
+                <tr data-value={{this.PlayerID}}>
+                    <td>{{this.PlayerID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.Position}}</td>
+                    <td>{{this.Team}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+        {{!-- Form to add a record to the table  --}}
+        <h3 id="add-player-form-header">Add Player</h3>
+        <p id="add-player-form-description">Fill out the information below and click submit when finished.</p>
+        <form id="add-player-form-ajax">
+            <label for="input-name">Name: </label>
+            <input type="text" name="input-name" id="input-name" required>
+            
+            <label for="input-position">Position: </label>
+            <input type="text" name="input-position" id="input-position" required>
+
+            <select name="input-team" id="input-team" required>
+                <option value="">Select a Team</option>
+                {{#each teams}}
+                <option value="{{this.TeamID}}">{{this.Name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit">
+        </form>
+    </article>
+</section>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_player.js"></script>

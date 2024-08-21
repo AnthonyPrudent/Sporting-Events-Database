@@ -1,0 +1,17 @@
+{
+  "name": "sportingeventsmanagement",
+  "version": "1.0.0",
+  "description": "Citation for the following code: Date: 8/9/2024. Adapted from Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anthony Prudent, Mei Murakami, Abdulelah Alanazi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^8.0.1",
+    "forever": "^4.0.3",
+    "mysql": "^2.18.1"
+  }
+}
